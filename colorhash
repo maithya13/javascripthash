@@ -1,0 +1,20 @@
+const { sha256 } = require("ethereum-cryptography/sha256");
+const { toHex, utf8ToBytes } = require("ethereum-cryptography/utils");
+
+const COLORS = ['red', 'green', 'blue', 'yellow', 'pink', 'orange'];
+
+function findColor(hash) {
+    for (let color of COLORS) {
+        // Convert the color string to bytes, then hash it
+        const colorHash = sha256(utf8ToBytes(color));
+        
+        // Compare the hashed color to the provided hash
+        if (toHex(colorHash) === toHex(hash)) {
+            return color;
+        }
+    }
+    // Return null or throw an error if no color matches the hash
+    return null;
+}
+
+module.exports = findColor;
